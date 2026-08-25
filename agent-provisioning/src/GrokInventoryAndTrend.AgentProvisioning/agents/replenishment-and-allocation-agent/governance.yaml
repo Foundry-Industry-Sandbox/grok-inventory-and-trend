@@ -1,0 +1,49 @@
+apiVersion: governance.toolkit/v1
+version: "1.0"
+name: replenishment-and-allocation-agent-governance
+default_action: allow
+rules:
+  - name: deny-get-planning-signals
+    condition: "tool_name == 'get_planning_signals'"
+    action: deny
+    priority: 100
+  - name: deny-search-signal-evidence
+    condition: "tool_name == 'search_signal_evidence'"
+    action: deny
+    priority: 100
+  - name: deny-get-signal-quality-rules
+    condition: "tool_name == 'get_signal_quality_rules'"
+    action: deny
+    priority: 100
+  - name: deny-get-planning-profile
+    condition: "tool_name == 'get_planning_profile'"
+    action: deny
+    priority: 100
+  - name: deny-get-driver-context
+    condition: "tool_name == 'get_driver_context'"
+    action: deny
+    priority: 100
+  - name: deny-get-relevant-promotions
+    condition: "tool_name == 'get_relevant_promotions'"
+    action: deny
+    priority: 100
+  - name: deny-get-trend-patterns
+    condition: "tool_name == 'get_trend_patterns'"
+    action: deny
+    priority: 100
+  - name: deny-get-forecasting-context
+    condition: "tool_name == 'get_forecasting_context'"
+    action: deny
+    priority: 100
+  - name: deny-get-planning-constraints
+    condition: "tool_name == 'get_planning_constraints'"
+    action: deny
+    priority: 100
+  - name: deny-get-relevant-policies
+    condition: "tool_name == 'get_relevant_policies'"
+    action: deny
+    priority: 100
+  - name: deny-get-policies-by-refs
+    condition: "tool_name == 'get_policies_by_refs'"
+    action: deny
+    priority: 100

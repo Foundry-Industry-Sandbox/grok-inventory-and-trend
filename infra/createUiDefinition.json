@@ -1,0 +1,826 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+  "version": "0.1.2-preview",
+  "handler": "Microsoft.Azure.CreateUIDef",
+  "parameters": {
+    "config": {
+      "basics": {
+        "description": "Deploy the Grok-powered inventory planning solution with Microsoft Foundry, Azure AI Search, Container Apps, observability, and optional Microsoft Fabric integration.",
+        "location": {
+          "label": "Deployment region",
+          "resourceTypes": [
+            "Microsoft.CognitiveServices/accounts",
+            "Microsoft.Search/searchServices",
+            "Microsoft.App/managedEnvironments",
+            "Microsoft.OperationalInsights/workspaces"
+          ],
+          "toolTip": "Choose a region that supports Microsoft Foundry, Azure AI Search, and Azure Container Apps. Model availability and deployment capacity are validated for this region.",
+          "visible": true
+        }
+      },
+      "isWizard": false
+    },
+    "resourceTypes": [
+      "Microsoft.App/containerApps",
+      "Microsoft.App/jobs",
+      "Microsoft.App/managedEnvironments",
+      "Microsoft.ContainerInstance/containerGroups",
+      "Microsoft.CognitiveServices/accounts",
+      "Microsoft.Insights/components",
+      "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "Microsoft.OperationalInsights/workspaces",
+      "Microsoft.Resources/deploymentScripts",
+      "Microsoft.Search/searchServices"
+    ],
+    "basics": [
+      {
+        "name": "baseName",
+        "type": "Microsoft.Common.TextBox",
+        "label": "Application base name",
+        "constraints": {
+          "required": true,
+          "validations": [
+            {
+              "regex": "^[a-z][a-z0-9-]{2,19}$",
+              "message": "Use 3-20 lowercase letters, numbers, or hyphens, starting with a letter."
+            }
+          ]
+        },
+        "defaultValue": "[concat('grok-inv-', substring(guid(), 0, 8))]",
+        "toolTip": "Use a short lowercase prefix for the managed application and all generated Azure resource names.",
+        "visible": true
+      },
+      {
+        "name": "getRegisterMicrosoftSearchArmApiControl859572",
+        "type": "Microsoft.Solutions.ArmApiControl",
+        "request": {
+          "method": "GET",
+          "path": "[concat(subscription().id, '/providers/Microsoft.Search?api-version=2021-04-01')]"
+        }
+      },
+      {
+        "name": "postRegisterMicrosoftSearchArmApiControl859572",
+        "type": "Microsoft.Solutions.ArmApiControl",
+        "condition": "[equals(steps('basics').getRegisterMicrosoftSearchArmApiControl859572.registrationState, 'Unregistered')]",
+        "request": {
+          "method": "POST",
+          "path": "[concat(subscription().id, '/providers/Microsoft.Search/register?api-version=2021-04-01')]"
+        }
+      },
+      {
+        "name": "getRegisterMicrosoftOperationalInsightsArmApiControl859572",
+        "type": "Microsoft.Solutions.ArmApiControl",
+        "request": {
+          "method": "GET",
+          "path": "[concat(subscription().id, '/providers/Microsoft.OperationalInsights?api-version=2021-04-01')]"
+        }
+      },
+      {
+        "name": "postRegisterMicrosoftOperationalInsightsArmApiControl859572",
+        "type": "Microsoft.Solutions.ArmApiControl",
+        "condition": "[equals(steps('basics').getRegisterMicrosoftOperationalInsightsArmApiControl859572.registrationState, 'Unregistered')]",
+        "request": {
+          "method": "POST",
+          "path": "[concat(subscription().id, '/providers/Microsoft.OperationalInsights/register?api-version=2021-04-01')]"
+        }
+      },
+      {
+        "name": "getRegisterMicrosoftInsightsArmApiControl859572",
+        "type": "Microsoft.Solutions.ArmApiControl",
+        "request": {
+          "method": "GET",
+          "path": "[concat(subscription().id, '/providers/Microsoft.Insights?api-version=2021-04-01')]"
+        }
+      },
+      {
+        "name": "postRegisterMicrosoftInsightsArmApiControl859572",
+        "type": "Microsoft.Solutions.ArmApiControl",
+        "condition": "[equals(steps('basics').getRegisterMicrosoftInsightsArmApiControl859572.registrationState, 'Unregistered')]",
+        "request": {
+          "method": "POST",
+          "path": "[concat(subscription().id, '/providers/Microsoft.Insights/register?api-version=2021-04-01')]"
+        }
+      },
+      {
+        "name": "getRegisterMicrosoftAppArmApiControl859572",
+        "type": "Microsoft.Solutions.ArmApiControl",
+        "request": {
+          "method": "GET",
+          "path": "[concat(subscription().id, '/providers/Microsoft.App?api-version=2021-04-01')]"
+        }
+      },
+      {
+        "name": "postRegisterMicrosoftAppArmApiControl859572",
+        "type": "Microsoft.Solutions.ArmApiControl",
+        "condition": "[equals(steps('basics').getRegisterMicrosoftAppArmApiControl859572.registrationState, 'Unregistered')]",
+        "request": {
+          "method": "POST",
+          "path": "[concat(subscription().id, '/providers/Microsoft.App/register?api-version=2021-04-01')]"
+        }
+      },
+      {
+        "name": "getRegisterMicrosoftCognitiveServicesArmApiControl859572",
+        "type": "Microsoft.Solutions.ArmApiControl",
+        "request": {
+          "method": "GET",
+          "path": "[concat(subscription().id, '/providers/Microsoft.CognitiveServices?api-version=2021-04-01')]"
+        }
+      },
+      {
+        "name": "postRegisterMicrosoftCognitiveServicesArmApiControl859572",
+        "type": "Microsoft.Solutions.ArmApiControl",
+        "condition": "[equals(steps('basics').getRegisterMicrosoftCognitiveServicesArmApiControl859572.registrationState, 'Unregistered')]",
+        "request": {
+          "method": "POST",
+          "path": "[concat(subscription().id, '/providers/Microsoft.CognitiveServices/register?api-version=2021-04-01')]"
+        }
+      },
+      {
+        "name": "getRegisterMicrosoftManagedIdentityArmApiControl859572",
+        "type": "Microsoft.Solutions.ArmApiControl",
+        "request": {
+          "method": "GET",
+          "path": "[concat(subscription().id, '/providers/Microsoft.ManagedIdentity?api-version=2021-04-01')]"
+        }
+      },
+      {
+        "name": "postRegisterMicrosoftManagedIdentityArmApiControl859572",
+        "type": "Microsoft.Solutions.ArmApiControl",
+        "condition": "[equals(steps('basics').getRegisterMicrosoftManagedIdentityArmApiControl859572.registrationState, 'Unregistered')]",
+        "request": {
+          "method": "POST",
+          "path": "[concat(subscription().id, '/providers/Microsoft.ManagedIdentity/register?api-version=2021-04-01')]"
+        }
+      },
+      {
+        "name": "getRegisterMicrosoftContainerInstanceArmApiControl859572",
+        "type": "Microsoft.Solutions.ArmApiControl",
+        "request": {
+          "method": "GET",
+          "path": "[concat(subscription().id, '/providers/Microsoft.ContainerInstance?api-version=2021-04-01')]"
+        }
+      },
+      {
+        "name": "postRegisterMicrosoftContainerInstanceArmApiControl859572",
+        "type": "Microsoft.Solutions.ArmApiControl",
+        "condition": "[equals(steps('basics').getRegisterMicrosoftContainerInstanceArmApiControl859572.registrationState, 'Unregistered')]",
+        "request": {
+          "method": "POST",
+          "path": "[concat(subscription().id, '/providers/Microsoft.ContainerInstance/register?api-version=2021-04-01')]"
+        }
+      }
+    ],
+    "steps": [
+      {
+        "name": "aiConfiguration",
+        "label": "AI and search",
+        "elements": [
+          {
+            "name": "agentModelSection",
+            "type": "Microsoft.Common.Section",
+            "label": "Agent Model Deployment",
+            "elements": []
+          },
+          {
+            "name": "modelAvailabilityInfo",
+            "type": "Microsoft.Common.InfoBox",
+            "options": {
+              "icon": "Info",
+              "text": "The Microsoft.CognitiveServices model catalog and regional capacity are checked for the selected subscription, deployment region, model version, and SKU before deployment."
+            }
+          },
+          {
+            "name": "availableModelsApi",
+            "type": "Microsoft.Solutions.ArmApiControl",
+            "request": {
+              "method": "GET",
+              "path": "[concat(subscription().id, '/providers/Microsoft.CognitiveServices/locations/', location(), '/models?api-version=2024-10-01')]"
+            }
+          },
+          {
+            "name": "agentModelFormat",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Agent model provider",
+            "constraints": {
+              "allowedValues": [
+                {
+                  "label": "xAI",
+                  "value": "xAI"
+                }
+              ],
+              "required": true
+            },
+            "defaultValue": "xAI",
+            "toolTip": "Provider format required by the Grok 4.3 model deployment.",
+            "visible": true
+          },
+          {
+            "name": "agentModelName",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Agent model name",
+            "constraints": {
+              "allowedValues": [
+                {
+                  "label": "grok-4.3",
+                  "value": "grok-4.3"
+                }
+              ],
+              "required": true
+            },
+            "defaultValue": "grok-4.3",
+            "toolTip": "Model used by all inventory planning and trend forecasting agents.",
+            "visible": true
+          },
+          {
+            "name": "agentModelVersion",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Agent model version",
+            "constraints": {
+              "allowedValues": [
+                {
+                  "label": "1",
+                  "value": "1"
+                }
+              ],
+              "required": true
+            },
+            "defaultValue": "1",
+            "toolTip": "Catalog version of Grok 4.3 deployed to the new Microsoft Foundry account.",
+            "visible": true
+          },
+          {
+            "name": "modelDeploymentName",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Agent model deployment name",
+            "constraints": {
+              "required": true,
+              "validations": [
+                {
+                  "regex": "^[A-Za-z0-9][A-Za-z0-9._-]{1,63}$",
+                  "message": "Use 2-64 letters, numbers, periods, underscores, or hyphens, starting with a letter or number."
+                },
+                {
+                  "isValid": "[greater(length(filter(coalesce(steps('aiConfiguration').availableModelsApi.value, parse('[]')), (item) => and(and(equals(item.model.format, steps('aiConfiguration').agentModelFormat), equals(item.model.name, steps('aiConfiguration').agentModelName)), equals(item.model.version, steps('aiConfiguration').agentModelVersion)))), 0)]",
+                  "message": "Grok 4.3 version 1 is not available in the selected subscription and region."
+                }
+              ]
+            },
+            "defaultValue": "grok-4.3",
+            "toolTip": "Name assigned to the Grok model deployment in the new Microsoft Foundry account.",
+            "visible": true
+          },
+          {
+            "name": "modelDeploymentSkuName",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Agent model deployment SKU",
+            "constraints": {
+              "allowedValues": [
+                {
+                  "label": "GlobalStandard",
+                  "value": "GlobalStandard"
+                },
+                {
+                  "label": "DataZoneStandard",
+                  "value": "DataZoneStandard"
+                },
+                {
+                  "label": "Standard",
+                  "value": "Standard"
+                },
+                {
+                  "label": "ProvisionedManaged",
+                  "value": "ProvisionedManaged"
+                }
+              ],
+              "required": true
+            },
+            "defaultValue": "GlobalStandard",
+            "toolTip": "Select the Microsoft Foundry deployment SKU for Grok 4.3. Availability varies by region and quota.",
+            "visible": true
+          },
+          {
+            "name": "agentModelCapacitiesApi",
+            "type": "Microsoft.Solutions.ArmApiControl",
+            "request": {
+              "method": "GET",
+              "path": "[concat(subscription().id, '/providers/Microsoft.CognitiveServices/modelCapacities?api-version=2026-05-01&modelFormat=', encodeUriComponent(steps('aiConfiguration').agentModelFormat), '&modelName=', encodeUriComponent(steps('aiConfiguration').agentModelName), '&modelVersion=', encodeUriComponent(steps('aiConfiguration').agentModelVersion))]",
+              "transforms": {
+                "sorted": "sort_by(value[?location != 'global'], &location)[*]"
+              }
+            }
+          },
+          {
+            "name": "agentCapacityStatus",
+            "type": "Microsoft.Common.TextBlock",
+            "options": {
+              "text": "(retrieving Grok model capacity data... please wait)"
+            },
+            "visible": "[empty(steps('aiConfiguration').agentModelCapacitiesApi)]"
+          },
+          {
+            "name": "agentCapacityAvailability",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Agent model regional capacity availability",
+            "constraints": {
+              "allowedValues": "[if(empty(filter(coalesce(steps('aiConfiguration').agentModelCapacitiesApi.transformed.sorted, parse('[]')), (item) => equals(toLower(item.properties.skuName), toLower(steps('aiConfiguration').modelDeploymentSkuName)))), parse('[{\"label\":\"No capacity available\",\"description\":\"Choose another deployment region, SKU, or model version.\",\"value\":{\"location\":\"\",\"modelFormat\":\"\",\"modelName\":\"\",\"modelVersion\":\"\",\"skuName\":\"\",\"availableCapacity\":0}}]'), map(filter(coalesce(steps('aiConfiguration').agentModelCapacitiesApi.transformed.sorted, parse('[]')), (item) => equals(toLower(item.properties.skuName), toLower(steps('aiConfiguration').modelDeploymentSkuName))), (item) => parse(concat('{\"label\":\"', item.location, '\",\"description\":\"', item.properties.skuName, ' - Available capacity: ', string(item.properties.availableCapacity), '\",\"value\":{\"location\":\"', item.location, '\",\"modelFormat\":\"', item.properties.model.format, '\",\"modelName\":\"', item.properties.model.name, '\",\"modelVersion\":\"', item.properties.model.version, '\",\"skuName\":\"', item.properties.skuName, '\",\"availableCapacity\":', string(item.properties.availableCapacity), '}}'))))]",
+              "required": true
+            },
+            "defaultValue": "[if(empty(filter(coalesce(steps('aiConfiguration').agentModelCapacitiesApi.value, parse('[]')), (item) => and(equals(toLower(item.location), toLower(location())), equals(toLower(item.properties.skuName), toLower(steps('aiConfiguration').modelDeploymentSkuName))))), '', first(map(filter(coalesce(steps('aiConfiguration').agentModelCapacitiesApi.value, parse('[]')), (item) => and(equals(toLower(item.location), toLower(location())), equals(toLower(item.properties.skuName), toLower(steps('aiConfiguration').modelDeploymentSkuName)))), (item) => item.location)))]",
+            "filter": true,
+            "filterPlaceholder": "Filter regions",
+            "multiLine": true,
+            "multiselect": false,
+            "placeholder": "Select regional capacity",
+            "toolTip": "Supported region, selected SKU, and currently available capacity for Grok 4.3.",
+            "visible": true
+          },
+          {
+            "name": "modelDeploymentCapacity",
+            "type": "Microsoft.Common.Slider",
+            "label": "Agent model capacity",
+            "constraints": {
+              "required": true
+            },
+            "defaultValue": 0,
+            "max": "[coalesce(steps('aiConfiguration').agentCapacityAvailability.availableCapacity, 0)]",
+            "min": 0,
+            "showStepMarkers": false,
+            "step": 1,
+            "subLabel": "capacity units",
+            "toolTip": "Select a positive capacity that does not exceed the available Grok capacity for the deployment region and SKU.",
+            "visible": true
+          },
+          {
+            "name": "agentNoAvailableCapacityInfo",
+            "type": "Microsoft.Common.InfoBox",
+            "options": {
+              "icon": "Error",
+              "text": "No Grok capacity is available. Select a different deployment region or SKU."
+            },
+            "visible": "[lessOrEquals(coalesce(steps('aiConfiguration').agentCapacityAvailability.availableCapacity, 0), 0)]"
+          },
+          {
+            "name": "agentAvailableCapacityInfo",
+            "type": "Microsoft.Common.InfoBox",
+            "options": {
+              "icon": "Success",
+              "text": "[concat('Grok capacity up to ', string(steps('aiConfiguration').agentCapacityAvailability.availableCapacity), ' is available in ', location(), '.')]"
+            },
+            "visible": "[greater(coalesce(steps('aiConfiguration').agentCapacityAvailability.availableCapacity, 0), 0)]"
+          },
+          {
+            "name": "agentNoSelectedCapacityInfo",
+            "type": "Microsoft.Common.InfoBox",
+            "options": {
+              "icon": "Warning",
+              "text": "[concat('Select a positive deployment capacity from the ', string(steps('aiConfiguration').agentCapacityAvailability.availableCapacity), ' available in ', location(), '.')]"
+            },
+            "visible": "[and(lessOrEquals(steps('aiConfiguration').modelDeploymentCapacity, 0), greater(steps('aiConfiguration').agentCapacityAvailability.availableCapacity, 0))]"
+          },
+          {
+            "name": "agentCapacityValidation",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Validated agent model capacity",
+            "constraints": {
+              "required": true,
+              "validations": [
+                {
+                  "regex": "^[1-9][0-9]*$",
+                  "message": "Capacity must be a positive integer."
+                },
+                {
+                  "isValid": "[and(equals(toLower(steps('aiConfiguration').agentCapacityAvailability.location), toLower(location())), equals(toLower(steps('aiConfiguration').agentCapacityAvailability.modelFormat), toLower(steps('aiConfiguration').agentModelFormat)), equals(steps('aiConfiguration').agentCapacityAvailability.modelName, steps('aiConfiguration').agentModelName), equals(steps('aiConfiguration').agentCapacityAvailability.modelVersion, steps('aiConfiguration').agentModelVersion), equals(toLower(steps('aiConfiguration').agentCapacityAvailability.skuName), toLower(steps('aiConfiguration').modelDeploymentSkuName)), greater(steps('aiConfiguration').agentCapacityAvailability.availableCapacity, 0), greater(int(steps('aiConfiguration').agentCapacityValidation), 0), lessOrEquals(int(steps('aiConfiguration').agentCapacityValidation), steps('aiConfiguration').agentCapacityAvailability.availableCapacity))]",
+                  "message": "[concat('Select the Grok availability row for the deployment region (', location(), ') and a capacity less than or equal to the available capacity for the selected SKU.')]"
+                }
+              ]
+            },
+            "defaultValue": "[steps('aiConfiguration').modelDeploymentCapacity]",
+            "multiLine": false,
+            "placeholder": "0",
+            "readOnly": true,
+            "toolTip": "Validated Grok deployment capacity for the selected region, model version, and SKU.",
+            "visible": true
+          },
+          {
+            "name": "embedSpacingSection",
+            "type": "Microsoft.Common.Section",
+            "label": "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014",
+            "elements": []
+          },
+          {
+            "name": "embeddingSection",
+            "type": "Microsoft.Common.Section",
+            "label": "Embedding Model Deployment",
+            "elements": []
+          },
+          {
+            "name": "embedDeploymentSkuName",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Embedding deployment SKU",
+            "constraints": {
+              "allowedValues": [
+                {
+                  "label": "GlobalStandard",
+                  "value": "GlobalStandard"
+                },
+                {
+                  "label": "DataZoneStandard",
+                  "value": "DataZoneStandard"
+                },
+                {
+                  "label": "Standard",
+                  "value": "Standard"
+                },
+                {
+                  "label": "ProvisionedManaged",
+                  "value": "ProvisionedManaged"
+                }
+              ],
+              "required": true
+            },
+            "defaultValue": "GlobalStandard",
+            "toolTip": "Select the deployment SKU for text-embedding-3-small version 1. Availability varies by region and quota.",
+            "visible": true
+          },
+          {
+            "name": "embedModelCapacitiesApi",
+            "type": "Microsoft.Solutions.ArmApiControl",
+            "request": {
+              "method": "GET",
+              "path": "[concat(subscription().id, '/providers/Microsoft.CognitiveServices/modelCapacities?api-version=2026-05-01&modelFormat=', encodeUriComponent('OpenAI'), '&modelName=', encodeUriComponent('text-embedding-3-small'), '&modelVersion=', encodeUriComponent('1'))]",
+              "transforms": {
+                "sorted": "sort_by(value[?location != 'global'], &location)[*]"
+              }
+            }
+          },
+          {
+            "name": "embedCapacityStatus",
+            "type": "Microsoft.Common.TextBlock",
+            "options": {
+              "text": "(retrieving embedding model capacity data... please wait)"
+            },
+            "visible": "[empty(steps('aiConfiguration').embedModelCapacitiesApi)]"
+          },
+          {
+            "name": "embedCapacityAvailability",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Embedding regional capacity availability",
+            "constraints": {
+              "allowedValues": "[if(empty(filter(coalesce(steps('aiConfiguration').embedModelCapacitiesApi.transformed.sorted, parse('[]')), (item) => equals(toLower(item.properties.skuName), toLower(steps('aiConfiguration').embedDeploymentSkuName)))), parse('[{\"label\":\"No capacity available\",\"description\":\"Choose another deployment region, SKU, or model version.\",\"value\":{\"location\":\"\",\"modelFormat\":\"\",\"modelName\":\"\",\"modelVersion\":\"\",\"skuName\":\"\",\"availableCapacity\":0}}]'), map(filter(coalesce(steps('aiConfiguration').embedModelCapacitiesApi.transformed.sorted, parse('[]')), (item) => equals(toLower(item.properties.skuName), toLower(steps('aiConfiguration').embedDeploymentSkuName))), (item) => parse(concat('{\"label\":\"', item.location, '\",\"description\":\"', item.properties.skuName, ' - Available capacity: ', string(item.properties.availableCapacity), '\",\"value\":{\"location\":\"', item.location, '\",\"modelFormat\":\"', item.properties.model.format, '\",\"modelName\":\"', item.properties.model.name, '\",\"modelVersion\":\"', item.properties.model.version, '\",\"skuName\":\"', item.properties.skuName, '\",\"availableCapacity\":', string(item.properties.availableCapacity), '}}'))))]",
+              "required": true
+            },
+            "defaultValue": "[if(empty(filter(coalesce(steps('aiConfiguration').embedModelCapacitiesApi.value, parse('[]')), (item) => and(equals(toLower(item.location), toLower(location())), equals(toLower(item.properties.skuName), toLower(steps('aiConfiguration').embedDeploymentSkuName))))), '', first(map(filter(coalesce(steps('aiConfiguration').embedModelCapacitiesApi.value, parse('[]')), (item) => and(equals(toLower(item.location), toLower(location())), equals(toLower(item.properties.skuName), toLower(steps('aiConfiguration').embedDeploymentSkuName)))), (item) => item.location)))]",
+            "filter": true,
+            "filterPlaceholder": "Filter regions",
+            "multiLine": true,
+            "multiselect": false,
+            "placeholder": "Select regional capacity",
+            "toolTip": "Supported region, selected SKU, and currently available capacity for text-embedding-3-small.",
+            "visible": true
+          },
+          {
+            "name": "embedDeploymentCapacity",
+            "type": "Microsoft.Common.Slider",
+            "label": "Embedding capacity",
+            "constraints": {
+              "required": true
+            },
+            "defaultValue": 0,
+            "max": "[coalesce(steps('aiConfiguration').embedCapacityAvailability.availableCapacity, 0)]",
+            "min": 0,
+            "showStepMarkers": false,
+            "step": 1,
+            "subLabel": "capacity units",
+            "toolTip": "Select a positive capacity that does not exceed the available embedding capacity for the deployment region and SKU.",
+            "visible": true
+          },
+          {
+            "name": "embedNoAvailableCapacityInfo",
+            "type": "Microsoft.Common.InfoBox",
+            "options": {
+              "icon": "Error",
+              "text": "No text-embedding-3-small capacity is available. Select a different deployment region or SKU."
+            },
+            "visible": "[lessOrEquals(coalesce(steps('aiConfiguration').embedCapacityAvailability.availableCapacity, 0), 0)]"
+          },
+          {
+            "name": "embedAvailableCapacityInfo",
+            "type": "Microsoft.Common.InfoBox",
+            "options": {
+              "icon": "Success",
+              "text": "[concat('Embedding capacity up to ', string(steps('aiConfiguration').embedCapacityAvailability.availableCapacity), ' is available in ', location(), '.')]"
+            },
+            "visible": "[greater(coalesce(steps('aiConfiguration').embedCapacityAvailability.availableCapacity, 0), 0)]"
+          },
+          {
+            "name": "embedNoSelectedCapacityInfo",
+            "type": "Microsoft.Common.InfoBox",
+            "options": {
+              "icon": "Warning",
+              "text": "[concat('Select a positive deployment capacity from the ', string(steps('aiConfiguration').embedCapacityAvailability.availableCapacity), ' available in ', location(), '.')]"
+            },
+            "visible": "[and(lessOrEquals(steps('aiConfiguration').embedDeploymentCapacity, 0), greater(steps('aiConfiguration').embedCapacityAvailability.availableCapacity, 0))]"
+          },
+          {
+            "name": "embedCapacityValidation",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Validated embedding capacity",
+            "constraints": {
+              "required": true,
+              "validations": [
+                {
+                  "regex": "^[1-9][0-9]*$",
+                  "message": "Capacity must be a positive integer."
+                },
+                {
+                  "isValid": "[and(equals(toLower(steps('aiConfiguration').embedCapacityAvailability.location), toLower(location())), equals(toLower(steps('aiConfiguration').embedCapacityAvailability.modelFormat), 'openai'), equals(steps('aiConfiguration').embedCapacityAvailability.modelName, 'text-embedding-3-small'), equals(steps('aiConfiguration').embedCapacityAvailability.modelVersion, '1'), equals(toLower(steps('aiConfiguration').embedCapacityAvailability.skuName), toLower(steps('aiConfiguration').embedDeploymentSkuName)), greater(steps('aiConfiguration').embedCapacityAvailability.availableCapacity, 0), greater(int(steps('aiConfiguration').embedCapacityValidation), 0), lessOrEquals(int(steps('aiConfiguration').embedCapacityValidation), steps('aiConfiguration').embedCapacityAvailability.availableCapacity))]",
+                  "message": "[concat('Select the text-embedding-3-small availability row for the deployment region (', location(), ') and a capacity less than or equal to the available capacity for the selected SKU.')]"
+                }
+              ]
+            },
+            "defaultValue": "[steps('aiConfiguration').embedDeploymentCapacity]",
+            "multiLine": false,
+            "placeholder": "0",
+            "readOnly": true,
+            "toolTip": "Validated text-embedding-3-small deployment capacity for the selected region, model version, and SKU.",
+            "visible": true
+          },
+          {
+            "name": "searchSpacingSection",
+            "type": "Microsoft.Common.Section",
+            "label": "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014",
+            "elements": []
+          },
+          {
+            "name": "azureSearchSection",
+            "type": "Microsoft.Common.Section",
+            "label": "Azure Search",
+            "elements": []
+          },
+          {
+            "name": "searchSku",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Azure AI Search SKU",
+            "constraints": {
+              "allowedValues": [
+                {
+                  "label": "free",
+                  "description": "Free tier for evaluation with strict service limits.",
+                  "value": "free"
+                },
+                {
+                  "label": "basic",
+                  "description": "Basic tier for light production workloads.",
+                  "value": "basic"
+                },
+                {
+                  "label": "standard",
+                  "description": "Standard S1 tier and the recommended demo default.",
+                  "value": "standard"
+                },
+                {
+                  "label": "standard2",
+                  "description": "Standard S2 tier for larger indexes and higher throughput.",
+                  "value": "standard2"
+                },
+                {
+                  "label": "standard3",
+                  "description": "Standard S3 tier for high-scale workloads.",
+                  "value": "standard3"
+                },
+                {
+                  "label": "storage_optimized_l1",
+                  "description": "Storage Optimized L1 tier for very large indexes.",
+                  "value": "storage_optimized_l1"
+                },
+                {
+                  "label": "storage_optimized_l2",
+                  "description": "Storage Optimized L2 tier for the largest index workloads.",
+                  "value": "storage_optimized_l2"
+                }
+              ],
+              "required": true
+            },
+            "defaultDescription": "Azure AI Search pricing tier",
+            "defaultValue": "standard",
+            "filter": true,
+            "filterPlaceholder": "Filter search SKUs",
+            "toolTip": "Select the Azure AI Search pricing tier for the policy retrieval index.",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "name": "containerConfiguration",
+        "label": "Container images",
+        "elements": [
+          {
+            "name": "containerImageInfo",
+            "type": "Microsoft.Common.InfoBox",
+            "options": {
+              "icon": "Info",
+              "text": "The defaults deploy the published demo images from GitHub Container Registry. Change them only when deploying a tested custom image set."
+            }
+          },
+          {
+            "name": "apiContainerImage",
+            "type": "Microsoft.Common.TextBox",
+            "label": "API container image",
+            "constraints": {
+              "required": true,
+              "validations": [
+                {
+                  "regex": "^([a-z0-9]+(?:[._-][a-z0-9]+)*(?::[0-9]+)?/)+[a-z0-9]+(?:[._-][a-z0-9]+)*(?::[A-Za-z0-9][A-Za-z0-9._-]{0,127}|@sha256:[A-Fa-f0-9]{64})$",
+                  "message": "Enter a full OCI image reference with a tag or sha256 digest."
+                }
+              ]
+            },
+            "defaultValue": "ghcr.io/foundry-industry-sandbox/inventoryplanning-api:demo",
+            "toolTip": "Full OCI image reference for the backend API Container App.",
+            "visible": true
+          },
+          {
+            "name": "mcpContainerImage",
+            "type": "Microsoft.Common.TextBox",
+            "label": "MCP container image",
+            "constraints": {
+              "required": true,
+              "validations": [
+                {
+                  "regex": "^([a-z0-9]+(?:[._-][a-z0-9]+)*(?::[0-9]+)?/)+[a-z0-9]+(?:[._-][a-z0-9]+)*(?::[A-Za-z0-9][A-Za-z0-9._-]{0,127}|@sha256:[A-Fa-f0-9]{64})$",
+                  "message": "Enter a full OCI image reference with a tag or sha256 digest."
+                }
+              ]
+            },
+            "defaultValue": "ghcr.io/foundry-industry-sandbox/inventoryplanning-mcp:demo",
+            "toolTip": "Full OCI image reference for the MCP host Container App and bootstrap job.",
+            "visible": true
+          },
+          {
+            "name": "provisioningContainerImage",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Provisioning container image",
+            "constraints": {
+              "required": true,
+              "validations": [
+                {
+                  "regex": "^([a-z0-9]+(?:[._-][a-z0-9]+)*(?::[0-9]+)?/)+[a-z0-9]+(?:[._-][a-z0-9]+)*(?::[A-Za-z0-9][A-Za-z0-9._-]{0,127}|@sha256:[A-Fa-f0-9]{64})$",
+                  "message": "Enter a full OCI image reference with a tag or sha256 digest."
+                }
+              ]
+            },
+            "defaultValue": "ghcr.io/foundry-industry-sandbox/inventoryplanning-provisioning:demo",
+            "toolTip": "Full OCI image reference for the Container Apps job that provisions Foundry agents.",
+            "visible": true
+          },
+          {
+            "name": "frontendContainerImage",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Frontend container image",
+            "constraints": {
+              "required": true,
+              "validations": [
+                {
+                  "regex": "^([a-z0-9]+(?:[._-][a-z0-9]+)*(?::[0-9]+)?/)+[a-z0-9]+(?:[._-][a-z0-9]+)*(?::[A-Za-z0-9][A-Za-z0-9._-]{0,127}|@sha256:[A-Fa-f0-9]{64})$",
+                  "message": "Enter a full OCI image reference with a tag or sha256 digest."
+                }
+              ]
+            },
+            "defaultValue": "ghcr.io/foundry-industry-sandbox/inventoryplanning-web:demo",
+            "toolTip": "Full OCI image reference for the Blazor frontend Container App.",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "name": "fabricConfiguration",
+        "label": "Microsoft Fabric",
+        "elements": [
+          {
+            "name": "enableFabric",
+            "type": "Microsoft.Common.CheckBox",
+            "label": "Enable Microsoft Fabric integration",
+            "defaultValue": false,
+            "toolTip": "Provision and seed a Fabric lakehouse, then configure the MCP host to use Fabric instead of the bundled local dataset.",
+            "visible": true
+          },
+          {
+            "name": "fabricPrerequisiteInfo",
+            "type": "Microsoft.Common.InfoBox",
+            "options": {
+              "icon": "Warning",
+              "text": "Before enabling Fabric, run infra/scripts/setup-fabric-provision-identity.ps1 for this deployment resource group. Select the resulting user-assigned identity below and ensure the target workspace is backed by Fabric capacity."
+            },
+            "visible": "[steps('fabricConfiguration').enableFabric]"
+          },
+          {
+            "name": "fabricIdentity",
+            "type": "Microsoft.Solutions.ResourceSelector",
+            "label": "Fabric deployment identity",
+            "constraints": {
+              "required": "[steps('fabricConfiguration').enableFabric]"
+            },
+            "options": {
+              "filter": {
+                "location": "onBasics",
+                "subscription": "onBasics"
+              }
+            },
+            "resourceType": "Microsoft.ManagedIdentity/userAssignedIdentities",
+            "toolTip": "Select the pre-provisioned user-assigned managed identity from the deployment resource group.",
+            "visible": "[steps('fabricConfiguration').enableFabric]"
+          },
+          {
+            "name": "fabricWorkspaceName",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Fabric workspace name",
+            "constraints": {
+              "required": "[steps('fabricConfiguration').enableFabric]",
+              "validations": [
+                {
+                  "regex": "^[A-Za-z0-9][A-Za-z0-9 _-]{0,255}$",
+                  "message": "Use 1-256 letters, numbers, spaces, underscores, or hyphens, starting with a letter or number."
+                }
+              ]
+            },
+            "defaultValue": "",
+            "toolTip": "Name of the existing capacity-backed Fabric workspace in which the lakehouse will be created or reused.",
+            "visible": "[steps('fabricConfiguration').enableFabric]"
+          },
+          {
+            "name": "fabricLakehouseName",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Fabric lakehouse name",
+            "constraints": {
+              "required": "[steps('fabricConfiguration').enableFabric]",
+              "validations": [
+                {
+                  "regex": "^[A-Za-z][A-Za-z0-9_ -]{0,255}$",
+                  "message": "Use 1-256 letters, numbers, spaces, underscores, or hyphens, starting with a letter."
+                }
+              ]
+            },
+            "defaultValue": "InventoryPlanningLakehouse",
+            "toolTip": "Name of the lakehouse to create or reuse in the selected Fabric workspace.",
+            "visible": "[steps('fabricConfiguration').enableFabric]"
+          },
+          {
+            "name": "fabricRepositoryArchiveUrl",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Fabric seed repository archive URL",
+            "constraints": {
+              "required": "[steps('fabricConfiguration').enableFabric]",
+              "validations": [
+                {
+                  "regex": "^https://[^\\s]+\\.zip(?:\\?[^\\s]*)?$",
+                  "message": "Enter a valid HTTPS URL that points to a ZIP archive."
+                }
+              ]
+            },
+            "defaultValue": "https://github.com/foundry-industry-sandbox/grok-inventory-and-trend/archive/refs/heads/main.zip",
+            "toolTip": "HTTPS URL of the repository ZIP archive containing the Fabric provisioning scripts and dataset seed.",
+            "visible": "[steps('fabricConfiguration').enableFabric]"
+          }
+        ]
+      }
+    ],
+    "outputs": {
+      "baseName": "[basics('baseName')]",
+      "location": "[location()]",
+      "modelDeploymentName": "[steps('aiConfiguration').modelDeploymentName]",
+      "modelDeploymentSkuName": "[steps('aiConfiguration').modelDeploymentSkuName]",
+      "modelDeploymentCapacity": "[int(steps('aiConfiguration').agentCapacityValidation)]",
+      "embedDeploymentSkuName": "[steps('aiConfiguration').embedDeploymentSkuName]",
+      "embedDeploymentCapacity": "[int(steps('aiConfiguration').embedCapacityValidation)]",
+      "agentModelFormat": "[steps('aiConfiguration').agentModelFormat]",
+      "agentModelName": "[steps('aiConfiguration').agentModelName]",
+      "agentModelVersion": "[steps('aiConfiguration').agentModelVersion]",
+      "searchSku": "[steps('aiConfiguration').searchSku]",
+      "apiContainerImage": "[steps('containerConfiguration').apiContainerImage]",
+      "mcpContainerImage": "[steps('containerConfiguration').mcpContainerImage]",
+      "provisioningContainerImage": "[steps('containerConfiguration').provisioningContainerImage]",
+      "frontendContainerImage": "[steps('containerConfiguration').frontendContainerImage]",
+      "enableFabric": "[steps('fabricConfiguration').enableFabric]",
+      "fabricWorkspaceName": "[if(steps('fabricConfiguration').enableFabric, steps('fabricConfiguration').fabricWorkspaceName, '')]",
+      "fabricLakehouseName": "[if(steps('fabricConfiguration').enableFabric, steps('fabricConfiguration').fabricLakehouseName, 'InventoryPlanningLakehouse')]",
+      "fabricIdentityName": "[if(steps('fabricConfiguration').enableFabric, steps('fabricConfiguration').fabricIdentity.name, 'fabric-identity')]",
+      "fabricRepositoryArchiveUrl": "[if(steps('fabricConfiguration').enableFabric, steps('fabricConfiguration').fabricRepositoryArchiveUrl, 'https://github.com/foundry-industry-sandbox/grok-inventory-and-trend/archive/refs/heads/main.zip')]",
+      "applicationResourceName": "[basics('baseName')]"
+    }
+  },
+  "metadata": {
+    "_generator": {
+      "name": "MaestroStudio",
+      "sku": "Ensemble",
+      "version": "0.9.0.4657+Retail-PR (ENSEMBLE)"
+    },
+    "_sync": {
+      "offer": {
+        "displayName": "My Offer"
+      },
+      "plan": {
+        "displayName": "Plan"
+      }
+    }
+  }
+}

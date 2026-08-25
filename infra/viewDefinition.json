@@ -1,0 +1,15 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/viewdefinition/0.0.1-preview/ViewDefinition.json#",
+  "contentVersion": "0.0.0.2",
+  "views": [
+    {
+      "kind": "Overview",
+      "properties": {
+        "displayName": "Overview",
+        "version": "1.0.0",
+        "header": "Grok Inventory and Trend",
+        "description": "Your agentic retail inventory planning solution is deployed.<br/><br/><em>Launch the retail site</em><br/>In the managed application menu, open <em>Settings > Parameters and Outputs</em>, then select <strong><code>retailSiteUrl</code></strong>. This is the primary application URL.<br/><br/><em>Key deployment links</em><br/>That view also includes <code>foundryProjectUrl</code> for the Microsoft Foundry project and <code>appInsightsLiveMetricsUrl</code> for live telemetry. Service endpoints are available as <code>apiUrl</code>, <code>mcpUrl</code>, <code>foundryProjectEndpoint</code>, and <code>searchServiceEndpoint</code>.<br/><br/><em>Optional Fabric integration</em><br/>When Fabric integration is enabled, use <code>fabricWorkspaceName</code> and <code>fabricLakehouseName</code> to identify the provisioned Fabric assets.<br/><br/><em>Deployment readiness</em><br/>Post-deployment provisioning and Foundry IQ bootstrap jobs can take 15-30 minutes. If the retail site is not ready immediately, wait for those jobs to finish and try again."
+      }
+    }
+  ]
+}

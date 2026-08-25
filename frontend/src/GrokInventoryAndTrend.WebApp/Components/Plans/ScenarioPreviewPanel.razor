@@ -1,0 +1,46 @@
+@namespace GrokInventoryAndTrend.WebApp.Components.Plans
+
+<div class="scenario-preview card">
+    @if (Scenario is null)
+    {
+        <EmptyState Title="Select a scenario" Description="Choose a planning scenario to preview scope and context." />
+    }
+    else
+    {
+        <div class="scenario-preview__header">
+            <h3 class="card__title">@Scenario.Title</h3>
+            <StatusBadge Label="@WorkflowStageUi.ToOutcomeTagLabel(Scenario.OutcomeTag)"
+                         CssClass="@WorkflowStageUi.ToOutcomeTagClass(Scenario.OutcomeTag)" />
+        </div>
+        <p class="card__description">@Scenario.Description</p>
+        <dl class="detail-list">
+            @if (!string.IsNullOrWhiteSpace(Scenario.ExpectedOutcome))
+            {
+                <div><dt>Expected outcome</dt><dd>@Scenario.ExpectedOutcome</dd></div>
+            }
+            @if (!string.IsNullOrWhiteSpace(Scenario.LegacyId))
+            {
+                <div><dt>Legacy ID</dt><dd>@Scenario.LegacyId</dd></div>
+            }
+            <div><dt>Category</dt><dd>@Scenario.Context.Category</dd></div>
+            <div><dt>Campaign</dt><dd>@Scenario.Context.Campaign</dd></div>
+            <div><dt>Horizon</dt><dd>@Scenario.Context.PlanningHorizon</dd></div>
+            <div><dt>Budget cap</dt><dd>@PlanDisplayFormatting.FormatCurrency(Scenario.Context.BudgetCap)</dd></div>
+            <div><dt>Target fill rate</dt><dd>@PlanDisplayFormatting.FormatFillRate(Scenario.Context.TargetFillRate)</dd></div>
+            <div><dt>SKUs</dt><dd>@Scenario.Context.AffectedSkuCount</dd></div>
+            @if (Scenario.Context.SignalSources.Count > 0)
+            {
+                <div><dt>Signal sources</dt><dd>@string.Join(", ", Scenario.Context.SignalSources)</dd></div>
+            }
+        </dl>
+        <LoadingButton IsLoading="IsBusy" CssClass="btn--primary" OnClick="OnRun">
+            Start workflow
+        </LoadingButton>
+    }
+</div>
+
+@code {
+    [Parameter] public SeedPlanDefinitionDto? Scenario { get; set; }
+    [Parameter] public bool IsBusy { get; set; }
+    [Parameter] public EventCallback OnRun { get; set; }
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "baseName": {
+      "value": "grokinventory"
+    },
+    "modelDeploymentName": {
+      "value": "grok-4.3"
+    },
+    "modelDeploymentSkuName": {
+      "value": "GlobalStandard"
+    },
+    "modelDeploymentCapacity": {
+      "value": 200
+    },
+    "embedDeploymentSkuName": {
+      "value": "GlobalStandard"
+    },
+    "embedDeploymentCapacity": {
+      "value": 1000
+    },
+    "agentModelFormat": {
+      "value": "xAI"
+    },
+    "agentModelName": {
+      "value": "grok-4.3"
+    },
+    "agentModelVersion": {
+      "value": "1"
+    },
+    "apiContainerImage": {
+      "value": "ghcr.io/foundry-industry-sandbox/inventoryplanning-api:demo"
+    },
+    "mcpContainerImage": {
+      "value": "ghcr.io/foundry-industry-sandbox/inventoryplanning-mcp:demo"
+    },
+    "provisioningContainerImage": {
+      "value": "ghcr.io/foundry-industry-sandbox/inventoryplanning-provisioning:demo"
+    },
+    "enableFabric": {
+      "value": false
+    },
+    "fabricWorkspaceName": {
+      "value": ""
+    },
+    "fabricLakehouseName": {
+      "value": "InventoryPlanningLakehouse"
+    },
+    "fabricIdentityName": {
+      "value": "fabric-identity"
+    },
+    "fabricRepositoryArchiveUrl": {
+      "value": "https://github.com/foundry-industry-sandbox/grok-inventory-and-trend/archive/refs/heads/main.zip"
+    }
+  }
+}

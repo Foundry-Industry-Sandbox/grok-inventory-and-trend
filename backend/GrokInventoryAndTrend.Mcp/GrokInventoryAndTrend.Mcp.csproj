@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InventoryPlanningMcpCopyAppSettingsToPublish Condition="'$(InventoryPlanningMcpCopyAppSettingsToPublish)' == ''">PreserveNewest</InventoryPlanningMcpCopyAppSettingsToPublish>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings*.json" CopyToPublishDirectory="$(InventoryPlanningMcpCopyAppSettingsToPublish)" />
+    <Content Update="appsettings.Bootstrap.local.json" CopyToPublishDirectory="Never" />
+    <Content Update="appsettings.Deployment.local.json" CopyToPublishDirectory="Never" />
+    <Content Update="appsettings.Seed.local.json" CopyToPublishDirectory="Never" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" Version="1.21.0" />
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.AspNetCore" Version="1.5.0" />
+    <PackageReference Include="Azure.Search.Documents" Version="12.0.0" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.29.1" />
+    <PackageReference Include="Azure.Storage.Files.DataLake" Version="12.27.1" />
+    <PackageReference Include="ModelContextProtocol.AspNetCore" Version="1.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\\GrokInventoryAndTrend.Governance\\GrokInventoryAndTrend.Governance.csproj" />
+  </ItemGroup>
+
+</Project>
