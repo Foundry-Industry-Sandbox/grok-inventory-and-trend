@@ -20,7 +20,6 @@ permissions:
 jobs:
   changes:
     runs-on: ubuntu-latest
-    #runs-on: self-hosted
     outputs:
       dotnet: ${{ steps.filter.outputs.dotnet }}
       bicep: ${{ steps.filter.outputs.bicep }}

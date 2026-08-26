@@ -8,14 +8,14 @@ Parameters for the custom Deploy to Azure template ([`infra/mainTemplate.json`](
 |---|---|---|
 | `baseName` | `grokinventory` | Short prefix used for deployed resource names. |
 | `location` | Resource group location | Azure region for all deployed resources. |
-| `modelDeploymentName` | `grok-4.3` | Foundry model deployment name used by all prompt agents. |
+| `modelDeploymentName` | `grok-4.6` | Foundry model deployment name used by all prompt agents. |
 | `modelDeploymentSkuName` | `GlobalStandard` | SKU for the agent model deployment. Use `GlobalStandard` for serverless; use a provisioned SKU only if available for the model and region. |
 | `modelDeploymentCapacity` | `100` | Capacity units for the agent model deployment. Increase when agents fail with `no_capacity` during peak load. |
 | `embedDeploymentSkuName` | `GlobalStandard` | SKU for the `text-embedding-3-small` deployment. Switch to `DataZoneStandard` or another regional SKU when `GlobalStandard` is not available in the target region. |
 | `embedDeploymentCapacity` | `1000` | Capacity units for the `text-embedding-3-small` deployment used for policy indexing. |
 | `agentModelFormat` | `xAI` | Foundry model provider format for the agent reasoning model. |
-| `agentModelName` | `grok-4.3` | Grok 4.3 model name in the Foundry catalog. |
-| `agentModelVersion` | `1` | Grok 4.3 model version. |
+| `agentModelName` | `grok-4.6` | Grok 4.6 model name in the Foundry catalog. |
+| `agentModelVersion` | `1` | Grok 4.6 model version. |
 | `searchSku` | `standard` | Azure AI Search SKU for demo retrieval indexes. |
 | `apiContainerImage` | `ghcr.io/foundry-industry-sandbox/inventoryplanning-api:demo` | Full container image URI for the API host Container App. |
 | `mcpContainerImage` | `ghcr.io/foundry-industry-sandbox/inventoryplanning-mcp:demo` | Full container image URI for the MCP host Container App. |

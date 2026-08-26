@@ -7,7 +7,7 @@ Bicep templates and scripts to deploy the sample into an Azure subscription. Dat
 | Resource | Purpose |
 |---|---|
 | Microsoft Foundry account and project | Prompt agents and model deployments |
-| xAI Grok 4.3 deployment | All five planning agents |
+| xAI Grok 4.6 deployment | All five planning agents |
 | text-embedding-3-small deployment | Policy indexing for Foundry IQ |
 | Azure AI Search | Policy retrieval index |
 | Container Apps Environment | Hosts API, MCP, and frontend |
@@ -41,7 +41,7 @@ Key parameters in `main.bicep`:
 |---|---|---|
 | `baseName` | `grokinventory` | Resource name prefix |
 | `location` | Resource group location | Azure region for all deployed resources |
-| `modelDeploymentName` | `grok-4.3` | Agent model deployment |
+| `modelDeploymentName` | `grok-4.6` | Agent model deployment |
 | `embedDeploymentSkuName` | `GlobalStandard` | SKU for text-embedding-3-small |
 | `embedDeploymentCapacity` | `1000` | Capacity for text-embedding-3-small |
 | `enableFabric` | `false` | Enable Fabric lakehouse integration |

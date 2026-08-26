@@ -6,7 +6,7 @@
       "value": "grokinventory"
     },
     "modelDeploymentName": {
-      "value": "grok-4.3"
+      "value": "grok-4.6"
     },
     "modelDeploymentSkuName": {
       "value": "GlobalStandard"
@@ -24,7 +24,7 @@
       "value": "xAI"
     },
     "agentModelName": {
-      "value": "grok-4.3"
+      "value": "grok-4.6"
     },
     "agentModelVersion": {
       "value": "1"

@@ -4,8 +4,8 @@ param baseName string = 'grokinventory'
 @description('Azure region for all deployed resources.')
 param location string = resourceGroup().location
 
-@description('Foundry model deployment name used by all planning agents (Grok 4.3).')
-param modelDeploymentName string = 'grok-4.3'
+@description('Foundry model deployment name used by all planning agents (Grok 4.6).')
+param modelDeploymentName string = 'grok-4.6'
 
 @description('SKU used by the Foundry model deployment for the agents. Use GlobalStandard for serverless deployments; use a provisioned SKU only if it is available for the model and region.')
 param modelDeploymentSkuName string = 'GlobalStandard'
@@ -24,10 +24,10 @@ param embedDeploymentCapacity int = 1000
 @description('Foundry model provider format for the agent reasoning model.')
 param agentModelFormat string = 'xAI'
 
-@description('Grok 4.3 model name in the Foundry catalog.')
-param agentModelName string = 'grok-4.3'
+@description('Grok 4.6 model name in the Foundry catalog.')
+param agentModelName string = 'grok-4.6'
 
-@description('Grok 4.3 model version in the Foundry catalog.')
+@description('Grok 4.6 model version in the Foundry catalog.')
 param agentModelVersion string = '1'
 
 @description('Azure AI Search SKU for demo retrieval indexes.')

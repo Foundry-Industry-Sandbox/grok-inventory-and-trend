@@ -8,11 +8,11 @@ Creates or updates the five Microsoft Foundry prompt agents required by the inve
 
 | Agent | Model | Tools | Memory | Purpose |
 |---|---|---|---|---|
-| `signal-ingestion-agent` | Grok 4.3 (`AZURE_AI_MODEL_DEPLOYMENT_NAME`) | MCP: `/signal-ingestion/mcp` | Workflow context | Ingest POS, inventory, supplier, and promotion signals; validate data quality |
-| `feature-and-causality-agent` | Grok 4.3 | MCP: `/feature-and-causality/mcp` | Workflow context | Build predictors; measure demand drivers |
-| `forecasting-agent` | Grok 4.3 | MCP: `/forecasting/mcp` | Workflow context | Short-term demand forecast; detect anomalies |
-| `replenishment-and-allocation-agent` | Grok 4.3 | MCP: `/replenishment-and-allocation/mcp` | Workflow context | Recommend stock targets and draft PO/TO orders |
-| `planner-copilot-agent` | Grok 4.3 | MCP: `/planner-copilot/mcp` | Workflow context | Enforce budget and service-level constraints for human approval |
+| `signal-ingestion-agent` | Grok 4.6 (`AZURE_AI_MODEL_DEPLOYMENT_NAME`) | MCP: `/signal-ingestion/mcp` | Workflow context | Ingest POS, inventory, supplier, and promotion signals; validate data quality |
+| `feature-and-causality-agent` | Grok 4.6 | MCP: `/feature-and-causality/mcp` | Workflow context | Build predictors; measure demand drivers |
+| `forecasting-agent` | Grok 4.6 | MCP: `/forecasting/mcp` | Workflow context | Short-term demand forecast; detect anomalies |
+| `replenishment-and-allocation-agent` | Grok 4.6 | MCP: `/replenishment-and-allocation/mcp` | Workflow context | Recommend stock targets and draft PO/TO orders |
+| `planner-copilot-agent` | Grok 4.6 | MCP: `/planner-copilot/mcp` | Workflow context | Enforce budget and service-level constraints for human approval |
 
 The **Planning orchestrator** runs in the API via Agent Framework and is not provisioned by this project.
 
@@ -21,7 +21,7 @@ The **Planning orchestrator** runs in the API via Agent Framework and is not pro
 | Variable | Required | Description |
 |---|---:|---|
 | `AZURE_FOUNDRY_PROJECT_ENDPOINT` | Yes | Foundry project API endpoint |
-| `AZURE_AI_MODEL_DEPLOYMENT_NAME` | Yes | Model deployment name (default deploy: `grok-4.3`) |
+| `AZURE_AI_MODEL_DEPLOYMENT_NAME` | Yes | Model deployment name (default deploy: `grok-4.6`) |
 | `MCP_BASE_URL` | Yes | Public HTTPS base URL of the MCP Container App |
 
 ## Provisioning flow
@@ -39,7 +39,7 @@ For local or maintenance runs after MCP is reachable:
 
 ```powershell
 $env:AZURE_FOUNDRY_PROJECT_ENDPOINT = "https://..."
-$env:AZURE_AI_MODEL_DEPLOYMENT_NAME = "grok-4.3"
+$env:AZURE_AI_MODEL_DEPLOYMENT_NAME = "grok-4.6"
 $env:MCP_BASE_URL = "https://..."
 
 dotnet run --project agent-provisioning/src/GrokInventoryAndTrend.AgentProvisioning

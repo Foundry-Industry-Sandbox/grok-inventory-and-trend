@@ -73,7 +73,7 @@ xychart-beta
 
 - Azure Cognitive Search is the main cost driver (~67% of spend).
 - About 74% of Container Apps spend is idle CPU/memory, indicating a strong right-sizing opportunity.
-- Agents run primarily on grok-4.3; chat prompts are large relative to output, so prompt sizing and caching are relevant savings levers.
+- Agents run primarily on grok-4.6; chat prompts are large relative to output, so prompt sizing and caching are relevant savings levers.
 - Frontend traffic is dominated by technical endpoints (`GET /health`, `GET api/inventory-planning/cases`) and execution status polling. Reducing that traffic lowers load, logs, and scaling needs.
 - Per-flow unit costing (ingestion/query/curation style) is not used for this sample; cost is modeled by agent operations and blended chat calls.
 

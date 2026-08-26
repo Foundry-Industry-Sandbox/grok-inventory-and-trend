@@ -2,7 +2,7 @@
 
 Demo-grade MCP tool provider for the five-agent inventory planning and trend forecasting workflow.
 
-All tools accept only **`caseId`** and **`executionId`** for this Foundry + Grok 4.3 demo.
+All tools accept only **`caseId`** and **`executionId`** for this Foundry + Grok 4.6 demo.
 
 ## MCP Endpoints
 

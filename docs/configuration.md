@@ -40,7 +40,7 @@ Post-seed verification script: [`infra/scripts/test-fabric-mcp-read.ps1`](../inf
 | Setting | Required | Description | Example |
 |---|:---:|---|---|
 | `AZURE_FOUNDRY_PROJECT_ENDPOINT` | Yes | Foundry project endpoint | See API |
-| `AZURE_AI_MODEL_DEPLOYMENT_NAME` | Yes | Agent model deployment | `grok-4.3` |
+| `AZURE_AI_MODEL_DEPLOYMENT_NAME` | Yes | Agent model deployment | `grok-4.6` |
 | `MCP_BASE_URL` | Yes | Public MCP base URL | `https://{mcp-app}.azurecontainerapps.io` |
 
 ### Frontend
@@ -57,7 +57,7 @@ Created by [infra/main.bicep](../infra/main.bicep). Key outputs: `retailSiteUrl`
 
 | Parameter | Default | Notes |
 |---|---|---|
-| `modelDeploymentName` | `grok-4.3` | All five agents |
+| `modelDeploymentName` | `grok-4.6` | All five agents |
 | `agentModelFormat` | `xAI` | Provider format |
 | Embedding deployment | `text-embedding-3-small` | Fixed in foundry.bicep |
 

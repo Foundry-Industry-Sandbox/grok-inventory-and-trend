@@ -4,7 +4,7 @@ End-to-end scenario definitions for the retail Agentic inventory-planning datase
 
 Single source of truth for the e2e *test cases*. Each scenario is one full path
 through the workflow (Orchestrator -> Signal Ingestion -> Feature & Causality ->
-Forecasting -> Replenishment & Allocation -> Planner Copilot, powered by Grok 4.3)
+Forecasting -> Replenishment & Allocation -> Planner Copilot, powered by Grok 4.6)
 and differs from the others at the human-in-the-loop gates.
 
 Both generators import this module so the ground-truth rollups and runtime case

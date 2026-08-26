@@ -6,7 +6,13 @@ This sample demonstrates an agentic application built with Microsoft Foundry, Mi
 
 The application implements a domain-specific multi-agent workflow for retail inventory planning and trend forecasting. It includes infrastructure-as-code, generated sample data, backend orchestration, prompt-agent provisioning, and a deployable frontend experience.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://ms.portal.azure.com/#view/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fmusiqa.blob.core.windows.net%2Fpreviewensemble%2F6e92879d6fb042e0a642a70c1796355f.json%3Fsp%3Dr%26st%3D2023-10-08T07%3A58%3A26Z%26se%3D2028-10-08T15%3A58%3A26Z%26spr%3Dhttps%26sv%3D2022-11-02%26sr%3Dc%26sig%3DusR%252FuocPVIEy1ChS9a1cfQ9yRoq%252FtNw3cfhTGRfxI8U%253D/createUIDefinitionUri/https%3A%2F%2Fmusiqa.blob.core.windows.net%2Fpreviewensemble%2F996ff2cbd637494c8a9f4b924db65503.json%3Fsp%3Dr%26st%3D2023-10-08T07%3A58%3A26Z%26se%3D2028-10-08T15%3A58%3A26Z%26spr%3Dhttps%26sv%3D2022-11-02%26sr%3Dc%26sig%3DusR%252FuocPVIEy1ChS9a1cfQ9yRoq%252FtNw3cfhTGRfxI8U%253D/templateCustomizationOptions/HideAll/_provisioningContext~/%7B%22initialValues%22%3A%7B%22subscriptionIds%22%3A%5B%22ca1c1b9f-dde6-44c2-bb8e-b03df99f9c1b%22%5D%2C%22resourceGroupNames%22%3A%5B%22DeploymentTestpad-RG%22%5D%2C%22locationNames%22%3A%5B%22eastus%22%5D%7D%2C%22marketplaceItem%22%3A%7B%22categoryIds%22%3A%5B%5D%2C%22id%22%3A%22Microsoft.Portal%22%2C%22itemDisplayName%22%3A%22NoMarketplace%22%2C%22products%22%3A%5B%5D%2C%22version%22%3A%22%22%2C%22productsWithNoPricing%22%3A%5B%5D%2C%22publisherDisplayName%22%3A%22Microsoft.Portal%22%2C%22deploymentName%22%3A%22MaestroStudioDeployment%22%2C%22launchingContext%22%3A%7B%22source%22%3A%5B%22CreateVmBlade%22%2C%22%7BName%3APart%2CType%3A%5B0%5DMicrosoft_Azure_Compute-%5B1%5DCreateVmBlade-%5B2%5DTemplateBladeVirtualLens-%5B5%5DCreateVmBlade%2CId%3APart-CreateVmBlade-2%7D%22%2C%22Part-CreateVmBlade-2%22%5D%2C%22galleryItemId%22%3A%22%22%7D%2C%22deploymentTemplateFileUris%22%3A%7B%7D%2C%22uiMetadata%22%3Anull%7D%7D)
+Deploy without wizard:
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#view/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FFoundry-Industry-Sandbox%2Fgrok-inventory-and-trend%2Frefs%2Fheads%2Fmain%2Finfra%2FmainTemplate.json)
+
+Deploy with the UI wizard (requires consent):
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#view/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FFoundry-Industry-Sandbox%2Fgrok-inventory-and-trend%2Frefs%2Fheads%2Fmain%2Finfra%2FmainTemplate.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FFoundry-Industry-Sandbox%2Fgrok-inventory-and-trend%2Frefs%2Fheads%2Fmain%2Finfra%2FcreateUiDefinition.json)
 
 > The Deploy to Azure button deploys the precompiled ARM template generated from the Bicep files in `/infra`. See [`docs/deployment-parameters.md`](./docs/deployment-parameters.md) for template parameters.
 
@@ -30,7 +36,7 @@ Pipeline order:
 
 - Multi-agent orchestration with Agent Framework.
 - Prompt-agent provisioning in Microsoft Foundry.
-- Use of xAI models through Microsoft Foundry (Grok 4.3 for reasoning).
+- Use of xAI models through Microsoft Foundry (Grok 4.6 for reasoning).
 - Retrieval-augmented generation over domain-specific data (Foundry IQ policies, lexical signal search, local knowledge files).
 - MCP-based tool access from backend agents.
 - End-to-end deployment using Bicep and ARM.
@@ -55,7 +61,7 @@ Pipeline order:
 Required:
 - Azure subscription.
 - Access to Microsoft Foundry.
-- Access to the required xAI (Grok 4.3) and embedding models in Microsoft Foundry.
+- Access to the required xAI (Grok 4.6) and embedding models in Microsoft Foundry.
 
 Optional:
 - Python 3 (only if regenerating demo data under `/data-generation`).
@@ -164,6 +170,12 @@ To enable Fabric, follow [docs/fabric-setup.md](./docs/fabric-setup.md).
 - Human approval is client-side only; there is no backend resume endpoint.
 - Some deployment settings may require adjustment based on region, quota, and model availability.
 - Responsible AI, security, monitoring, and compliance controls must be reviewed before production use.
+
+## Known issues
+
+For the scenario where you want to deploy the solution using the UI wizard, note that the UI definition calls Azure REST APIs to get model capacities for the region where you want to deploy the Foundry models. This requires user consent and displays the following dialog:
+
+![Azure Portal Consent Dialog](./docs/images/Azure-Portal-UI-Definition-Consent.png)
 
 ## Related documentation
 

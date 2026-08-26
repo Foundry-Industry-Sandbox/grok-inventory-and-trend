@@ -211,7 +211,7 @@
               "required": true
             },
             "defaultValue": "xAI",
-            "toolTip": "Provider format required by the Grok 4.3 model deployment.",
+            "toolTip": "Provider format required by the Grok 4.6 model deployment.",
             "visible": true
           },
           {
@@ -221,13 +221,13 @@
             "constraints": {
               "allowedValues": [
                 {
-                  "label": "grok-4.3",
-                  "value": "grok-4.3"
+                  "label": "grok-4.6",
+                  "value": "grok-4.6"
                 }
               ],
               "required": true
             },
-            "defaultValue": "grok-4.3",
+            "defaultValue": "grok-4.6",
             "toolTip": "Model used by all inventory planning and trend forecasting agents.",
             "visible": true
           },
@@ -245,7 +245,7 @@
               "required": true
             },
             "defaultValue": "1",
-            "toolTip": "Catalog version of Grok 4.3 deployed to the new Microsoft Foundry account.",
+            "toolTip": "Catalog version of Grok 4.6 deployed to the new Microsoft Foundry account.",
             "visible": true
           },
           {
@@ -261,11 +261,11 @@
                 },
                 {
                   "isValid": "[greater(length(filter(coalesce(steps('aiConfiguration').availableModelsApi.value, parse('[]')), (item) => and(and(equals(item.model.format, steps('aiConfiguration').agentModelFormat), equals(item.model.name, steps('aiConfiguration').agentModelName)), equals(item.model.version, steps('aiConfiguration').agentModelVersion)))), 0)]",
-                  "message": "Grok 4.3 version 1 is not available in the selected subscription and region."
+                  "message": "Grok 4.6 version 1 is not available in the selected subscription and region."
                 }
               ]
             },
-            "defaultValue": "grok-4.3",
+            "defaultValue": "grok-4.6",
             "toolTip": "Name assigned to the Grok model deployment in the new Microsoft Foundry account.",
             "visible": true
           },
@@ -295,7 +295,7 @@
               "required": true
             },
             "defaultValue": "GlobalStandard",
-            "toolTip": "Select the Microsoft Foundry deployment SKU for Grok 4.3. Availability varies by region and quota.",
+            "toolTip": "Select the Microsoft Foundry deployment SKU for Grok 4.6. Availability varies by region and quota.",
             "visible": true
           },
           {
@@ -331,7 +331,7 @@
             "multiLine": true,
             "multiselect": false,
             "placeholder": "Select regional capacity",
-            "toolTip": "Supported region, selected SKU, and currently available capacity for Grok 4.3.",
+            "toolTip": "Supported region, selected SKU, and currently available capacity for Grok 4.6.",
             "visible": true
           },
           {
