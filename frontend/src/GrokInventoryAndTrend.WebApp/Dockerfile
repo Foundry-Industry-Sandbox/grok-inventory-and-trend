@@ -7,6 +7,9 @@ COPY frontend/src/GrokInventoryAndTrend.WebApp/ frontend/src/GrokInventoryAndTre
 COPY dataset-seed/ dataset-seed/
 WORKDIR /src/frontend/src/GrokInventoryAndTrend.WebApp
 RUN dotnet publish -c Release -o /app/publish --no-restore
+RUN test -s /app/publish/wwwroot/_framework/blazor.web.js \
+    && grep -Eq '"Route"[[:space:]]*:[[:space:]]*"_framework/blazor\.web\.js"' /app/publish/GrokInventoryAndTrend.WebApp.staticwebassets.endpoints.json \
+    || { echo "Published frontend is missing the Blazor script or its static asset endpoint." >&2; exit 1; }
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app

@@ -39,6 +39,7 @@
 |---|---|---|
 | Cannot load cases | Wrong dataset path | Verify `DatasetSeed:RootPath` points to `dataset-seed` |
 | API connection refused | Backend not running | Start API; set `PlanningApi__BaseUrl` |
+| Landing page loads but controls do nothing; `/_framework/blazor.web.js` returns `404` | Frontend image was published without the .NET 10 Blazor asset package because Docker restored before copying Razor files | Rebuild the frontend with `RequiresAspNetWebAssets=true` in its project file and deploy the new image. Run `infra/scripts/test-frontend.ps1 -BaseUrl <frontend-url>`. Do not switch to Development or restart the same incomplete image. See the private-image recovery option in `infra/README.md`. |
 | Workflow polling timeout | Slow agents or failure | Check status endpoint; review API and Foundry logs |
 
 ## Dataset issues

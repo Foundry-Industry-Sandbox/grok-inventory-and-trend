@@ -6,6 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>GrokInventoryAndTrend.WebApp</RootNamespace>
     <AssemblyName>GrokInventoryAndTrend.WebApp</AssemblyName>
+    <!-- Docker restores this project before copying the Razor components. -->
+    <RequiresAspNetWebAssets>true</RequiresAspNetWebAssets>
   </PropertyGroup>
 
 </Project>

@@ -21,6 +21,7 @@ Parameters for the custom Deploy to Azure template ([`infra/mainTemplate.json`](
 | `mcpContainerImage` | `ghcr.io/foundry-industry-sandbox/inventoryplanning-mcp:demo` | Full container image URI for the MCP host Container App. |
 | `provisioningContainerImage` | `ghcr.io/foundry-industry-sandbox/inventoryplanning-provisioning:demo` | Full container image URI for the agent provisioning Container Apps Job. |
 | `frontendContainerImage` | `ghcr.io/foundry-industry-sandbox/inventoryplanning-web:demo` | Full container image URI for the frontend Container App. |
+| `frontendRegistryName` | `''` | Optional private ACR name in the deployment resource group. Provision and populate it using `infra/modules/frontend-registry.bicep` before app deployment, then set `frontendContainerImage` to its image digest. The template configures a dedicated managed identity with registry-scoped `AcrPull`. Leave empty for public images. |
 | `enableFabric` | `false` | When `true`, provisions a Fabric lakehouse, seeds lakehouse data, and configures MCP to read case context from Fabric. Requires `fabricWorkspaceName` and `fabricIdentityName`. |
 | `fabricWorkspaceName` | `''` | Fabric workspace name. Required when `enableFabric` is `true`. Must be capacity-backed and accessible to the operator. |
 | `fabricLakehouseName` | `InventoryPlanningLakehouse` | Fabric lakehouse name. Created at deploy time if missing when Fabric is enabled. |
