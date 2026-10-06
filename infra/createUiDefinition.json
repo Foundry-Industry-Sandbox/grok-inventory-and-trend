@@ -689,23 +689,6 @@
             "defaultValue": "ghcr.io/foundry-industry-sandbox/inventoryplanning-web:demo",
             "toolTip": "Full OCI image reference for the Blazor frontend Container App.",
             "visible": true
-          },
-          {
-            "name": "frontendRegistryName",
-            "type": "Microsoft.Common.TextBox",
-            "label": "Private frontend registry name (optional)",
-            "constraints": {
-              "required": false,
-              "validations": [
-                {
-                  "regex": "^$|^[a-z0-9]{5,50}$",
-                  "message": "Leave blank for public images, or enter 5-50 lowercase letters and numbers."
-                }
-              ]
-            },
-            "defaultValue": "",
-            "toolTip": "Private ACR in the deployment resource group. Provision and push the frontend image first using infra/modules/frontend-registry.bicep. The app uses a dedicated managed identity with AcrPull; no registry password is required.",
-            "visible": true
           }
         ]
       },
@@ -817,7 +800,6 @@
       "mcpContainerImage": "[steps('containerConfiguration').mcpContainerImage]",
       "provisioningContainerImage": "[steps('containerConfiguration').provisioningContainerImage]",
       "frontendContainerImage": "[steps('containerConfiguration').frontendContainerImage]",
-      "frontendRegistryName": "[steps('containerConfiguration').frontendRegistryName]",
       "enableFabric": "[steps('fabricConfiguration').enableFabric]",
       "fabricWorkspaceName": "[if(steps('fabricConfiguration').enableFabric, steps('fabricConfiguration').fabricWorkspaceName, '')]",
       "fabricLakehouseName": "[if(steps('fabricConfiguration').enableFabric, steps('fabricConfiguration').fabricLakehouseName, 'InventoryPlanningLakehouse')]",
