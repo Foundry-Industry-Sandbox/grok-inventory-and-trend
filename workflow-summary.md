@@ -1,6 +1,6 @@
 # Agentic Inventory Planning and Trend Forecasting — Workflow Summary
 
-Business and functional reference for the agentic inventory planning and trend forecasting solution, built on **Microsoft Foundry**, **Agent Framework**, and **Grok 4.6**. The system is organized as a **single sequential planning pipeline** — five specialized agents coordinated by a Planning orchestrator — that turns real-time supply-chain signals into approved replenishment and allocation decisions.
+Business and functional reference for the agentic inventory planning and trend forecasting solution, built on **Microsoft Foundry**, **Agent Framework**, and **Grok 4.7**. The system is organized as a **single sequential planning pipeline** — five specialized agents coordinated by a Planning orchestrator — that turns real-time supply-chain signals into approved replenishment and allocation decisions.
 
 ---
 
@@ -123,7 +123,7 @@ Every agent shares the same technical stack:
 |---------------|-------------------------------------------|
 | Platform      | Microsoft Foundry Agent Service           |
 | Orchestration | Agent Framework (Microsoft)               |
-| Model         | Grok 4.6                                  |
+| Model         | Grok 4.7                                  |
 | Memory        | Context across workflow steps             |
 | Integration   | Azure MCP                                 |
 | Retrieval     | Embedding + Vector DB + Rerank (TBD)      |
@@ -159,7 +159,7 @@ Embedding → Vector DB → Rerank → Top-N context
 | **Embedding** | Generate vector embeddings of indexed content (model TBD) |
 | **Vector DB** | Store and retrieve vectors (Azure AI Search or another compatible vector store) |
 | **Rerank** | Re-order candidates by relevance before passing to the model (model TBD) |
-| **Top-N context** | Final passages that ground generation with Grok 4.6 |
+| **Top-N context** | Final passages that ground generation with Grok 4.7 |
 
 | RAG use case | Indexed knowledge | Used by |
 |--------------|-------------------|---------|
@@ -204,7 +204,7 @@ Agents read and write these systems through **Azure MCP**.
 | Symbol | Meaning |
 |--------|---------|
 | Purple box | Agent |
-| Green box | Model (Grok 4.6) |
+| Green box | Model (Grok 4.7) |
 | Beige box | External systems / data |
 | Blue box | Agent actions |
 | Person (pink) | Human-in-the-loop (Planner Copilot) |
@@ -243,17 +243,17 @@ A human planner signs off on purchase and transfer orders at the end of the pipe
 |-----------|-------------|
 | **Domain** | Supply chain / retail: demand planning, replenishment, allocation |
 | **Architecture** | Sequential multi-agent pipeline with orchestration |
-| **Model** | **Grok 4.6** for reasoning and generation across all agents |
+| **Model** | **Grok 4.7** for reasoning and generation across all agents |
 | **Retrieval** | `text-embedding-3-small` + Azure AI Search + Foundry IQ for policies; lexical search over local case JSON for signal evidence |
 | **Platform** | **Microsoft Foundry Agent Service** hosting agents; **Agent Framework** for workflow and hand-offs |
 | **Integrations** | POS, ERP/inventory, suppliers, promotions, data-entry portal, Azure AI Search, Azure MCP |
-| **AI** | LLM (Grok 4.6) + RAG (Foundry IQ + local evidence) + in-process workflow memory + tools (MCP) |
+| **AI** | LLM (Grok 4.7) + RAG (Foundry IQ + local evidence) + in-process workflow memory + tools (MCP) |
 | **Operations** | Traceability, evaluation, and compliance by design; App Insights and tracing required |
 | **Human** | One approval gate at Planner Copilot; human sign-off required before PO/TO orders are finalized |
 
 ### Implementation checklist
 
-1. **Foundry:** provision the project; deploy **Grok 4.6** and **text-embedding-3-small**; configure Agent Service.
+1. **Foundry:** provision the project; deploy **Grok 4.7** and **text-embedding-3-small**; configure Agent Service.
 2. **Agent Framework:** define the orchestrator and the sequential planning workflow with five sub-agents.
 3. **RAG:** bootstrap Foundry IQ policy index (embedding + Search); serve signal evidence from case JSON; promotions and trend patterns from local knowledge files.
 4. **MCP:** expose tools for POS, inventory, suppliers, promotions, and policy retrieval.

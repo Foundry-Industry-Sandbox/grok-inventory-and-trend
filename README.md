@@ -1,8 +1,8 @@
-# Agentic inventory planning and trend forecasting with Microsoft Foundry and xAI models
+# Agentic inventory planning and trend forecasting with Microsoft Foundry and SpaceXAI models
 
 ## Overview
 
-This sample demonstrates an agentic application built with Microsoft Foundry, Microsoft Foundry prompt agents, Agent Framework and xAI models, MCP tools, and a web frontend.
+This sample demonstrates an agentic application built with Microsoft Foundry, Microsoft Foundry prompt agents, Agent Framework and SpaceXAI models, MCP tools, and a web frontend.
 
 The application implements a domain-specific multi-agent workflow for retail inventory planning and trend forecasting. It includes infrastructure-as-code, generated sample data, backend orchestration, prompt-agent provisioning, and a deployable frontend experience.
 
@@ -36,7 +36,7 @@ Pipeline order:
 
 - Multi-agent orchestration with Agent Framework.
 - Prompt-agent provisioning in Microsoft Foundry.
-- Use of xAI models through Microsoft Foundry (Grok 4.6 for reasoning).
+- Use of SpaceXAI models through Microsoft Foundry (Grok 4.7 for reasoning).
 - Retrieval-augmented generation over domain-specific data (Foundry IQ policies, lexical signal search, local knowledge files).
 - MCP-based tool access from backend agents.
 - End-to-end deployment using Bicep and ARM.
@@ -61,7 +61,7 @@ Pipeline order:
 Required:
 - Azure subscription.
 - Access to Microsoft Foundry.
-- Access to the required xAI (Grok 4.6) and embedding models in Microsoft Foundry.
+- Access to the required SpaceXAI (Grok 4.7) and embedding models in Microsoft Foundry.
 
 Optional:
 - Python 3 (only if regenerating demo data under `/data-generation`).

@@ -14,7 +14,7 @@
 | Symptom | Possible cause | Resolution |
 |---|---|---|
 | Agent errors mentioning capacity | `no_capacity` on Grok deployment | Increase `modelDeploymentCapacity` in Bicep parameters |
-| Model not found | Region or catalog mismatch | Confirm Grok 4.6 is available in target region |
+| Model not found | Region or catalog mismatch | Confirm Grok 4.7 is available in target region |
 | Embedding failures | Missing embed deployment | Verify foundry.bicep completed; check `embedDeploymentName` output |
 
 ## Agent provisioning issues

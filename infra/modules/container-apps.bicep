@@ -7,6 +7,8 @@ param frontendAppName string
 param apiContainerImage string
 param mcpContainerImage string
 param frontendContainerImage string
+param frontendRegistryServer string = ''
+param frontendRegistryIdentityId string = ''
 param apiIdentityId string
 param apiIdentityClientId string
 param mcpIdentityId string
@@ -186,9 +188,23 @@ resource frontendApp 'Microsoft.App/containerApps@2024-03-01' = {
   name: frontendAppName
   location: location
   tags: resourceTags
+  identity: empty(frontendRegistryIdentityId) ? {
+    type: 'None'
+  } : {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${frontendRegistryIdentityId}': {}
+    }
+  }
   properties: {
     managedEnvironmentId: containerAppsEnvironmentId
     configuration: {
+      registries: empty(frontendRegistryServer) ? [] : [
+        {
+          server: frontendRegistryServer
+          identity: frontendRegistryIdentityId
+        }
+      ]
       ingress: {
         external: true
         targetPort: 8080
@@ -212,7 +228,7 @@ resource frontendApp 'Microsoft.App/containerApps@2024-03-01' = {
             {
               type: 'Liveness'
               httpGet: {
-                path: '/'
+                path: '/health'
                 port: 8080
               }
               initialDelaySeconds: 10
@@ -221,7 +237,7 @@ resource frontendApp 'Microsoft.App/containerApps@2024-03-01' = {
             {
               type: 'Readiness'
               httpGet: {
-                path: '/'
+                path: '/_framework/blazor.web.js'
                 port: 8080
               }
               initialDelaySeconds: 5

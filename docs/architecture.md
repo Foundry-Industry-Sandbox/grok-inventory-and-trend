@@ -55,7 +55,7 @@ Foundry agents call public HTTPS MCP endpoints on the MCP Container App. All too
 
 | Use | Model | Provider |
 |---|---|---|
-| Agent reasoning | Grok 4.6 | xAI via Foundry |
+| Agent reasoning | Grok 4.7 | SpaceXAI via Foundry |
 | Policy embeddings | text-embedding-3-small | OpenAI format via Foundry |
 | Signal evidence rerank (optional) | Cohere-rerank-v4.0-fast | Cohere via Foundry |
 

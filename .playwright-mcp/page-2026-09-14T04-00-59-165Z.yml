@@ -1,0 +1,95 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Inventory Planning & Trend Forecasting Plan smarter. Stock right." [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [aria-hidden] [ref=e5]: CIT
+        - generic [ref=e6]:
+          - generic [ref=e7]: Inventory Planning & Trend Forecasting
+          - generic [ref=e8]: Plan smarter. Stock right.
+      - navigation [ref=e9]:
+        - link "Home" [ref=e10] [cursor=pointer]:
+          - /url: /
+  - main [ref=e11]:
+    - generic [ref=e12]:
+      - paragraph [ref=e13]: Supply chain planning
+      - heading "Retail planning" [level=1] [ref=e14]
+      - paragraph [ref=e15]: Select a retail planning scenario and run the five-agent inventory pipeline.
+    - generic [ref=e16]:
+      - generic [ref=e17]:
+        - heading "Planning scenarios" [level=2] [ref=e18]
+        - paragraph [ref=e19]: Search and filter demo scenarios backed by local seed data.
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - generic [ref=e23]: Search scenarios
+          - searchbox "Search scenarios" [ref=e24]
+          - group "Filter by outcome" [ref=e25]:
+            - button "Healthy run" [ref=e26] [cursor=pointer]
+            - button "Anomalies expected" [ref=e27] [cursor=pointer]
+            - button "Budget pressure" [ref=e28] [cursor=pointer]
+            - button "Service level risk" [ref=e29] [cursor=pointer]
+        - generic [ref=e30]:
+          - listbox "Planning scenarios" [ref=e31]:
+            - option "Seasonal happy path Household — Gift Wrap Assortment Healthy run" [ref=e32] [cursor=pointer]:
+              - generic [ref=e33]: Seasonal happy path
+              - generic [ref=e34]: Household — Gift Wrap Assortment
+              - generic [ref=e35]: Healthy run
+            - option "Promotion spike → budget review Foods — Promotional SKU Budget pressure" [ref=e36] [cursor=pointer]:
+              - generic [ref=e37]: Promotion spike → budget review
+              - generic [ref=e38]: Foods — Promotional SKU
+              - generic [ref=e39]: Budget pressure
+            - option "Supplier delay → expedite Household — Core SKU Service level risk" [ref=e40] [cursor=pointer]:
+              - generic [ref=e41]: Supplier delay → expedite
+              - generic [ref=e42]: Household — Core SKU
+              - generic [ref=e43]: Service level risk
+            - option "Partial fill → reorder Hobbies — Core SKU Service level risk" [ref=e44] [cursor=pointer]:
+              - generic [ref=e45]: Partial fill → reorder
+              - generic [ref=e46]: Hobbies — Core SKU
+              - generic [ref=e47]: Service level risk
+            - option "Demand anomaly → no action Hobbies — Core SKU Anomalies expected" [ref=e48] [cursor=pointer]:
+              - generic [ref=e49]: Demand anomaly → no action
+              - generic [ref=e50]: Hobbies — Core SKU
+              - generic [ref=e51]: Anomalies expected
+          - generic [ref=e52]:
+            - generic [ref=e53]:
+              - heading "Seasonal happy path" [level=3] [ref=e54]
+              - generic [ref=e55]: Healthy run
+            - paragraph [ref=e56]: Plan seasonal replenishment for Christmas week for SKU HOUSEHOLD_1_334 at store TX_2. Clean holiday forecast; order approved; no HITL gate.
+            - generic [ref=e57]:
+              - generic [ref=e58]:
+                - term [ref=e59]: Expected outcome
+                - definition [ref=e60]: Clean holiday forecast; order approved (208 units); no HITL gate.
+              - generic [ref=e61]:
+                - term [ref=e62]: Legacy ID
+                - definition [ref=e63]: IPF-001
+              - generic [ref=e64]:
+                - term [ref=e65]: Category
+                - definition [ref=e66]: Household — Gift Wrap Assortment
+              - generic [ref=e67]:
+                - term [ref=e68]: Campaign
+                - definition [ref=e69]: Christmas seasonal ramp
+              - generic [ref=e70]:
+                - term [ref=e71]: Horizon
+                - definition [ref=e72]: Short-term weekly
+              - generic [ref=e73]:
+                - term [ref=e74]: Budget cap
+                - definition [ref=e75]: ¤250,000
+              - generic [ref=e76]:
+                - term [ref=e77]: Target fill rate
+                - definition [ref=e78]: 95 %
+              - generic [ref=e79]:
+                - term [ref=e80]: SKUs
+                - definition [ref=e81]: "1"
+              - generic [ref=e82]:
+                - term [ref=e83]: Signal sources
+                - definition [ref=e84]: POS transactions, Inventory snapshots, Supplier master
+            - button "Start workflow" [ref=e85] [cursor=pointer]
+    - generic [ref=e86]:
+      - generic [ref=e87]:
+        - heading "Executed workflows" [level=2] [ref=e88]
+        - paragraph [ref=e89]: Workflow runs started in this session.
+      - generic [ref=e91]:
+        - heading "No executed workflows" [level=3] [ref=e92]
+        - paragraph [ref=e93]: Start a workflow from a scenario above to see runs here.
+  - contentinfo [ref=e94]:
+    - paragraph [ref=e96]: Synthetic retail data and automated planning recommendations are for demonstration only.

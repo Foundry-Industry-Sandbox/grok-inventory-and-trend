@@ -4,8 +4,8 @@ param baseName string = 'grokinventory'
 @description('Azure region for all deployed resources.')
 param location string = resourceGroup().location
 
-@description('Foundry model deployment name used by all planning agents (Grok 4.6).')
-param modelDeploymentName string = 'grok-4.6'
+@description('Foundry model deployment name used by all planning agents (Grok 4.7).')
+param modelDeploymentName string = 'grok-4.7'
 
 @description('SKU used by the Foundry model deployment for the agents. Use GlobalStandard for serverless deployments; use a provisioned SKU only if it is available for the model and region.')
 param modelDeploymentSkuName string = 'GlobalStandard'
@@ -24,10 +24,10 @@ param embedDeploymentCapacity int = 1000
 @description('Foundry model provider format for the agent reasoning model.')
 param agentModelFormat string = 'xAI'
 
-@description('Grok 4.6 model name in the Foundry catalog.')
-param agentModelName string = 'grok-4.6'
+@description('Grok 4.7 model name in the Foundry catalog.')
+param agentModelName string = 'grok-4.7'
 
-@description('Grok 4.6 model version in the Foundry catalog.')
+@description('Grok 4.7 model version in the Foundry catalog.')
 param agentModelVersion string = '1'
 
 @description('Azure AI Search SKU for demo retrieval indexes.')
@@ -44,6 +44,10 @@ param provisioningContainerImage string = 'ghcr.io/foundry-industry-sandbox/inve
 
 @description('Full container image URI for the frontend web app.')
 param frontendContainerImage string = 'ghcr.io/foundry-industry-sandbox/inventoryplanning-web:demo'
+
+@description('Optional private frontend ACR name in this resource group. Provision and populate it before deploying the app; leave empty for public images.')
+@maxLength(50)
+param frontendRegistryName string = ''
 
 @description('Enable Microsoft Fabric integration. When false, MCP uses bundled local dataset mode.')
 param enableFabric bool = false
@@ -64,6 +68,18 @@ var resourceTags = {
   project: 'inesite'
 }
 
+resource partnerCenterAttribution 'Microsoft.Resources/deployments@2023-07-01' = {
+  name: 'pid-37fb1526-752e-4b59-8ef0-a505105bb828-partnercenter'
+  properties: {
+    mode: 'Incremental'
+    template: {
+      '$schema': 'https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#'
+      contentVersion: '1.0.0.0'
+      resources: []
+    }
+  }
+}
+
 resource resourceGroupTags 'Microsoft.Resources/tags@2021-04-01' = {
   name: 'default'
   properties: {
@@ -75,6 +91,15 @@ module naming 'modules/naming.bicep' = {
   name: 'naming'
   params: {
     baseName: baseName
+  }
+}
+
+module frontendRegistry 'modules/frontend-registry.bicep' = if (!empty(frontendRegistryName)) {
+  name: 'frontend-registry'
+  params: {
+    registryName: frontendRegistryName
+    location: location
+    resourceTags: resourceTags
   }
 }
 
@@ -161,6 +186,8 @@ module containerApps 'modules/container-apps.bicep' = {
     apiContainerImage: apiContainerImage
     mcpContainerImage: mcpContainerImage
     frontendContainerImage: frontendContainerImage
+    frontendRegistryServer: empty(frontendRegistryName) ? '' : frontendRegistry!.outputs.loginServer
+    frontendRegistryIdentityId: empty(frontendRegistryName) ? '' : frontendRegistry!.outputs.pullIdentityId
     apiIdentityId: security.outputs.apiIdentityId
     apiIdentityClientId: security.outputs.apiIdentityClientId
     mcpIdentityId: security.outputs.mcpIdentityId
